@@ -15,6 +15,21 @@ public class Portfolio
 	{
 		this.balance = new BigDecimal(balance);
 		stocks = new ArrayList<PurchasedStock>();
+		FileManager fm = new FileManager("balance.txt");
+		ArrayList<Object> temp = new ArrayList<Object>();
+		temp.add(balance);
+		fm.writeFile(temp);
+	}
+	
+	public Portfolio(){
+		FileManager fm = new FileManager("balance.txt");
+		this.balance = new BigDecimal(Double.parseDouble((String) fm.readFile().get(0)));
+		stocks = new ArrayList<PurchasedStock>();
+		FileManager fm1 = new FileManager("stocks.txt");
+		ArrayList<Object> temp = fm1.readFile();
+		for(int i = 0; i < temp.size() - 1; i++){
+			stocks.add(new PurchasedStock((String)temp.get(i), Integer.parseInt((String)temp.get(i + 1))));
+		}
 	}
 	
 	public BigDecimal getBalance()
@@ -34,6 +49,7 @@ public class Portfolio
 		if(balance.compareTo(temp.getQuote().getPrice().multiply(new BigDecimal(amount))) >= 0)
 		{
 			this.balance = balance.subtract(temp.getQuote().getPrice().multiply(new BigDecimal(amount)));
+			this.updateBalanceFile();
 			for(PurchasedStock p: stocks)
 			{
 				if(p.getSymbol().equals(symbol))
@@ -43,7 +59,7 @@ public class Portfolio
 				}
 			}
 			stocks.add(new PurchasedStock(symbol, amount));
-			
+			this.updateStockFile();
 		} else {
 			throw new NoBalanceException(); 
 		}
@@ -58,9 +74,11 @@ public class Portfolio
 				if(stock.getAmount() >= amount){
 					stock.sell(amount);
 					balance = balance.add(YahooFinance.get(symbol).getQuote().getPrice().multiply(new BigDecimal(amount)));
+					this.updateBalanceFile();
 					if(stock.getAmount() <= 0){
 						stocks.remove(i);
 					}
+					this.updateStockFile();
 					return; 
 				}
 			}
@@ -78,6 +96,23 @@ public class Portfolio
 				System.out.println("Symbol: " + s.getSymbol() + ", Amount: " + s.getAmount());
 			}
 		}
+	}
+	
+	private void updateBalanceFile(){
+		FileManager fm = new FileManager("balance.txt");
+		ArrayList<Object> temp = new ArrayList<Object>();
+		temp.add(balance);
+		fm.writeFile(temp);
+	}
+	
+	private void updateStockFile(){
+		FileManager fm = new FileManager("stocks.txt");
+		ArrayList<Object> temp = new ArrayList<Object>();
+		for(PurchasedStock s : stocks){
+			temp.add(s.getSymbol());
+			temp.add(s.getAmount());
+		}
+		fm.writeFile(temp);
 	}
 	
 	
