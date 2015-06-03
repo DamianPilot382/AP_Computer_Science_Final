@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=fileName
+comment0.target=FileManager(java.lang.String)
+comment1.params=
+comment1.target=java.util.ArrayList\ readFile()
+comment2.params=temp
+comment2.target=void\ writeFile(java.util.ArrayList)
+numComments=3

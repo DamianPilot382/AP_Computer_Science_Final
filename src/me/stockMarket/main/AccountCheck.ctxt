@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=str
+comment0.target=boolean\ checkUserName(java.lang.String)
+comment1.params=user\ pass
+comment1.target=boolean\ checkPassword(java.lang.String,\ java.lang.String)
+comment2.params=
+comment2.target=java.util.ArrayList\ readUserNames()
+comment3.params=
+comment3.target=java.util.ArrayList\ readPassword()
+comment4.params=user\ pass
+comment4.target=void\ addUser(java.lang.String,\ java.lang.String)
+comment5.params=user
+comment5.target=void\ removeUser(java.lang.String)
+comment6.params=
+comment6.target=int\ getAccountsSize()
+numComments=7
