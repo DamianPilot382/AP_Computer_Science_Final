@@ -1,2 +1,5 @@
-MD
-100
+!damian
+AAPL
+20
+INTC
+5

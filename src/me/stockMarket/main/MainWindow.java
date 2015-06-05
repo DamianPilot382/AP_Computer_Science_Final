@@ -37,10 +37,26 @@ public class MainWindow {
 		frame.getContentPane().add(lblStockMarketSimulator);
 		
 		JLabel lblCreatedByTaylor = new JLabel("Created by: Taylor Mijangos, Alec English, and Damian Ugalde");
-		lblCreatedByTaylor.setBounds(30, 38, 366, 14);
+		lblCreatedByTaylor.setBounds(58, 37, 366, 14);
 		frame.getContentPane().add(lblCreatedByTaylor);
 		
 		JButton btnMyStocks = new JButton("My Stocks");
+		btnMyStocks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Object[] temp = new Object[AccountCheck.getUserStocks().size() / 2];
+				int j = 0;
+				for(int i = 0; i < AccountCheck.getUserStocks().size(); i += 2){
+					temp[j] = AccountCheck.getUserStocks().get(i);
+					j++;
+				}
+				String option = (String) JOptionPane.showInputDialog(null, "Choose an existing file.",
+					        null, JOptionPane.QUESTION_MESSAGE, null, temp, AccountCheck.getUsernames().get(0));
+				YahooFinance.get(option).print();
+
+				
+			}
+		});
 		btnMyStocks.setBounds(96, 160, 212, 23);
 		frame.getContentPane().add(btnMyStocks);
 		
@@ -56,7 +72,7 @@ public class MainWindow {
 		JButton btnCheckStockInfo = new JButton("Check Stock Info");
 		btnCheckStockInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String input = JOptionPane.showInputDialog("Please enter a Stock Symbol").toUpperCase();
+				String input = JOptionPane.showInputDialog("Enter a Stock Symbol:").toUpperCase();
 				YahooFinance.get(input).print();
 			}
 		});
@@ -71,5 +87,40 @@ public class MainWindow {
 		});
 		btnQuit.setBounds(96, 228, 212, 23);
 		frame.getContentPane().add(btnQuit);
+		
+		JButton btnTransactions = new JButton("Transactions");
+		btnTransactions.setBounds(96, 92, 212, 23);
+		frame.getContentPane().add(btnTransactions);
+		btnTransactions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int option = JOptionPane
+						.showOptionDialog(
+								null,
+								"Do you want to Buy or sell?",
+								null, JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, new Object[] {
+										"Buy", "Sell" },
+								"Buy");
+				String input = JOptionPane.showInputDialog("Enter a Stock Symbol:").toUpperCase();
+				String amount = JOptionPane.showInputDialog("Enter an amount of stocks:").toUpperCase();
+
+				
+				if(option == 0){
+					try {
+						StockMarket.portfolio.buyStock(input, Integer.parseInt(amount));
+					} catch (NoBalanceException e) {
+						JOptionPane.showMessageDialog(null, "Not enough funds to complete request.");
+					}
+				}else{
+					try{
+						StockMarket.portfolio.sellStock(input, Integer.parseInt(amount));
+					}catch(Exception e){
+						JOptionPane.showMessageDialog(null, "You don't own enough stocks to complete request.");
+					}
+				}
+			}
+		});
+
 	}
+	
 }

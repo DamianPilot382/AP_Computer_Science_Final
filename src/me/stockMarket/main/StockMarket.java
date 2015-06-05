@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import java.math.BigDecimal;
 
 public class StockMarket {
 
@@ -23,9 +24,10 @@ public class StockMarket {
 
 					if (ask() == 0) {
 						registerUser();
-						portfolio = new Portfolio(10000);
+						portfolio = new Portfolio(new BigDecimal(10000));
 					} else {
-						portfolio = new Portfolio();
+						selectUser();
+						portfolio = new Portfolio(AccountCheck.getUserBalance());
 					}
 
 					MainWindow window = new MainWindow();
@@ -92,6 +94,39 @@ public class StockMarket {
 	}
 
 	private static void selectUser() {
-		
+		Object[] temp = new Object[AccountCheck.getUsernames().size()];
+		temp = AccountCheck.getUsernames().toArray();
+	    sessionName = (String) JOptionPane.showInputDialog(null, "Choose an existing file.",
+	        null, JOptionPane.QUESTION_MESSAGE, null, temp, AccountCheck.getUsernames().get(0));
+	    System.out.println(sessionName);
+	    if(sessionName == null){
+	    	System.exit(0);
+	    }
+	    	while(true){
+	    	JPanel panel = new JPanel();
+	    	JLabel label = new JLabel("Enter a password:");
+	    	JPasswordField pass = new JPasswordField(10);
+	    	panel.add(label);
+	    	panel.add(pass);
+	    	String[] options = new String[]{"OK", "Cancel"};
+	    	int option = JOptionPane.showOptionDialog(null, panel, null,
+	    			JOptionPane.NO_OPTION, JOptionPane.PLAIN_MESSAGE,
+	    			null, options, options[0]);
+	    	if(option == 0)
+	    	{
+	    		char[] password = pass.getPassword();
+		    	String passcode = "";
+			    for(char s : password){
+		    	passcode = passcode + s;
+			    }
+			    if(AccountCheck.checkPassword(sessionName, passcode)){
+			    	sessionPass = passcode;
+			    	return;
+			    }
+								
+	    	}else{
+	    		System.exit(0);
+	    	}
+	    	}
 	}
 }
