@@ -10,6 +10,7 @@ import yahoofinance.YahooFinance;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import java.math.BigDecimal;
 
 public class MainWindow {
 
@@ -30,6 +31,7 @@ public class MainWindow {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setResizable(false);
 		
 		JLabel lblStockMarketSimulator = new JLabel("Stock Market Simulator");
 		lblStockMarketSimulator.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
@@ -37,7 +39,7 @@ public class MainWindow {
 		frame.getContentPane().add(lblStockMarketSimulator);
 		
 		JLabel lblCreatedByTaylor = new JLabel("Created by: Taylor Mijangos, Alec English, and Damian Ugalde");
-		lblCreatedByTaylor.setBounds(58, 37, 366, 14);
+		lblCreatedByTaylor.setBounds(44, 37, 366, 14);
 		frame.getContentPane().add(lblCreatedByTaylor);
 		
 		JButton btnMyStocks = new JButton("My Stocks");
@@ -51,7 +53,7 @@ public class MainWindow {
 					j++;
 				}
 				String option = (String) JOptionPane.showInputDialog(null, "Choose an existing file.",
-					        null, JOptionPane.QUESTION_MESSAGE, null, temp, AccountCheck.getUsernames().get(0));
+					        null, JOptionPane.QUESTION_MESSAGE, null, temp, AccountCheck.getUserStocks().get(0));
 				YahooFinance.get(option).print();
 
 				
@@ -63,7 +65,7 @@ public class MainWindow {
 		JButton btnCheckBalance = new JButton("Check Balance");
 		btnCheckBalance.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "Your balance is $" + StockMarket.portfolio.getBalance());
+				JOptionPane.showMessageDialog(null, "Your balance is $" + StockMarket.portfolio.getBalance().setScale(2, BigDecimal.ROUND_HALF_UP));
 			}
 		});
 		btnCheckBalance.setBounds(96, 126, 212, 23);
@@ -91,6 +93,10 @@ public class MainWindow {
 		JButton btnTransactions = new JButton("Transactions");
 		btnTransactions.setBounds(96, 92, 212, 23);
 		frame.getContentPane().add(btnTransactions);
+		
+		JLabel lblWelcome = new JLabel("Welcome, " + StockMarket.sessionName);
+		lblWelcome.setBounds(10, 253, 366, 14);
+		frame.getContentPane().add(lblWelcome);
 		btnTransactions.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int option = JOptionPane
@@ -122,5 +128,4 @@ public class MainWindow {
 		});
 
 	}
-	
 }
