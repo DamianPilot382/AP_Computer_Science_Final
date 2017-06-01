@@ -1,8 +1,9 @@
 package me.stockMarket.main;
 
-import java.math.BigDecimal;
-
 import yahoofinance.YahooFinance;
+
+import java.io.IOException;
+import java.math.BigDecimal;
 
 public class PurchasedStock {
 	private int amount;
@@ -13,7 +14,11 @@ public class PurchasedStock {
 	public PurchasedStock(String symbol, int amount) {
 		this.amount = amount;
 		this.symbol = symbol;
-		dollarCostAverage = YahooFinance.get(symbol).getQuote().getPrice();
+		try {
+			dollarCostAverage = YahooFinance.get(symbol).getQuote().getPrice();
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void buy(int amount) {

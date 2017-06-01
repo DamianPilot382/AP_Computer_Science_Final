@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=balance
+comment0.target=Portfolio(java.math.BigDecimal)
+comment1.params=
+comment1.target=java.math.BigDecimal\ getBalance()
+comment2.params=
+comment2.target=java.util.ArrayList\ getStocks()
+comment3.params=symbol\ amount
+comment3.target=void\ buyStock(java.lang.String,\ int)
+comment4.params=symbol\ amount
+comment4.target=void\ sellStock(java.lang.String,\ int)
+comment5.params=
+comment5.target=void\ printStocks()
+numComments=6

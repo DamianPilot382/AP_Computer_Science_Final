@@ -1,9 +1,11 @@
 package me.stockMarket.main;
-import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import yahoofinance.Stock;
 import yahoofinance.YahooFinance;
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 
 
 public class Portfolio
@@ -29,7 +31,7 @@ public class Portfolio
 		return stocks;
 	}
 	
-	public void buyStock(String symbol, int amount) throws NoBalanceException
+	public void buyStock(String symbol, int amount) throws IOException, NoBalanceException
 	{
 		Stock temp = YahooFinance.get(symbol);
 		
@@ -56,7 +58,7 @@ public class Portfolio
 		}
 	}
 	
-	public void sellStock(String symbol, int amount)
+	public void sellStock(String symbol, int amount) throws IOException
 	{
 		
 		ArrayList<String> adding = new ArrayList<String>();

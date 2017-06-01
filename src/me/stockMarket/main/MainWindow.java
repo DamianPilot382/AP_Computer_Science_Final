@@ -1,15 +1,12 @@
 package me.stockMarket.main;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
 import yahoofinance.YahooFinance;
 
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.math.BigDecimal;
 
 public class MainWindow {
@@ -54,9 +51,13 @@ public class MainWindow {
 				}
 				String option = (String) JOptionPane.showInputDialog(null, "Choose an existing file.",
 					        null, JOptionPane.QUESTION_MESSAGE, null, temp, AccountCheck.getUserStocks().get(0));
-				YahooFinance.get(option).print();
+				try {
+					YahooFinance.get(option).print();
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
 
-				
+
 			}
 		});
 		btnMyStocks.setBounds(96, 160, 212, 23);
@@ -75,7 +76,11 @@ public class MainWindow {
 		btnCheckStockInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String input = JOptionPane.showInputDialog("Enter a Stock Symbol:").toUpperCase();
-				YahooFinance.get(input).print();
+				try {
+					YahooFinance.get(input).print();
+				} catch(IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		btnCheckStockInfo.setBounds(96, 194, 212, 23);
@@ -116,6 +121,8 @@ public class MainWindow {
 						StockMarket.portfolio.buyStock(input, Integer.parseInt(amount));
 					} catch (NoBalanceException e) {
 						JOptionPane.showMessageDialog(null, "Not enough funds to complete request.");
+					} catch(IOException e){
+
 					}
 				}else{
 					try{

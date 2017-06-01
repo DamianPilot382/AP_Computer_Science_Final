@@ -1,13 +1,9 @@
 package me.stockMarket.main;
 
-import java.awt.EventQueue;
-import java.util.logging.LogManager;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+import javax.swing.*;
+import java.awt.*;
 import java.math.BigDecimal;
+import java.util.logging.LogManager;
 
 public class StockMarket {
 

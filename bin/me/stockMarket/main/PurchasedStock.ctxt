@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.params=symbol\ amount
+comment0.target=PurchasedStock(java.lang.String,\ int)
+comment1.params=amount
+comment1.target=void\ buy(int)
+comment2.params=amount
+comment2.target=void\ sell(int)
+comment3.params=
+comment3.target=java.lang.String\ getSymbol()
+comment4.params=
+comment4.target=int\ getAmount()
+comment5.params=amount
+comment5.target=void\ addAmount(int)
+numComments=6
